@@ -8,8 +8,8 @@ import datetime
 from pytz import timezone
 from discord.ext import commands
 
-class trdCommands(commands.Cog, name='TRD Server Commands'):
-  '''These are the commands for the TRD server'''
+class islamicCommands(commands.Cog, name='Islamic Commands'):
+  '''These are the Islamic Commands'''
 
   def __init__(self, bot):
     self.bot = bot
@@ -73,11 +73,11 @@ class trdCommands(commands.Cog, name='TRD Server Commands'):
       pt.append(k)
     return pt
   
-  def get_ptime_roseville(self, day):
+  def get_ptime_davis(self, day):
     url = ('http://api.aladhan.com/v1/timings'
         '/'+day+
-        '?latitude=38.80160586408448'
-        '&longitude=-121.31378519625713'
+        '?latitude=38.544907'
+        '&longitude=-121.740517'
         '&method=2'  
         )
     pt = []
@@ -95,7 +95,7 @@ class trdCommands(commands.Cog, name='TRD Server Commands'):
       pt = self.get_ptime(day, lat,long)
     else:
       day = datetime.datetime.now(timezone('US/Pacific')).strftime("%d-%m-%Y")
-      pt = self.get_ptime_roseville(day)
+      pt = self.get_ptime_davis(day)
     times = {}
     times['fajr'] = pt[0]
     times['sunrise'] = pt[1]
@@ -130,8 +130,8 @@ class trdCommands(commands.Cog, name='TRD Server Commands'):
       embed=discord.Embed(title="AbidBot Prayer Times", description="Prayer times in **{}** from the *aladhan.com* API.".format(locations[ctx.author.id][2]))
     else:
       day = datetime.datetime.now(timezone('US/Pacific')).strftime("%d-%m-%Y")
-      pt = self.get_ptime_roseville(day)
-      embed=discord.Embed(title="AbidBot Prayer Times", description="Prayer times in Roseville, CA, from the *aladhan.com* API.")
+      pt = self.get_ptime_davis(day)
+      embed=discord.Embed(title="AbidBot Prayer Times", description="Prayer times in Davis, CA, from the *aladhan.com* API.")
     fajr = self.ctime(pt[0])
     sunrise = self.ctime(pt[1])
     dhuhr = self.ctime(pt[2])
@@ -163,8 +163,8 @@ class trdCommands(commands.Cog, name='TRD Server Commands'):
       pt = self.get_ptime(day, lat,long)
     else:
       day = datetime.datetime.now(timezone('US/Pacific')).strftime("%d-%m-%Y")
-      pt = self.get_ptime_roseville(day)
-      loc = 'Roseville'
+      pt = self.get_ptime_davis(day)
+      loc = 'Davis'
     fajr = self.ctime(pt[0])
     await ctx.send('Fajr is at **{}** {} in **{}**.'.format(fajr, name, loc))
 
@@ -175,7 +175,7 @@ class trdCommands(commands.Cog, name='TRD Server Commands'):
       name = 'today'
     else:
       try:
-        day = datetime.datetime.strptime(day, "%m/%d/%Y").strftime("%d-%m-%Y")
+        day = datetime.datetime.strptime(day, "%m/  /%Y").strftime("%d-%m-%Y")
         name = "on **{}**".format(datetime.datetime.strptime(day, "%d-%m-%Y").strftime("%a, %B %d %Y"))
       except:
         await ctx.send('Please format the date correctly: `MM/DD/YYYY`')
@@ -189,8 +189,8 @@ class trdCommands(commands.Cog, name='TRD Server Commands'):
       pt = self.get_ptime(day, lat,long)
     else:
       day = datetime.datetime.now(timezone('US/Pacific')).strftime("%d-%m-%Y")
-      pt = self.get_ptime_roseville(day)
-      loc = 'Roseville'
+      pt = self.get_ptime_davis(day)
+      loc = 'Davis'
     dhuhr = self.ctime(pt[2])
     await ctx.send('Dhuhr is at **{}** {} in **{}**.'.format(dhuhr, name, loc))
 
@@ -215,8 +215,8 @@ class trdCommands(commands.Cog, name='TRD Server Commands'):
       pt = self.get_ptime(day, lat,long)
     else:
       day = datetime.datetime.now(timezone('US/Pacific')).strftime("%d-%m-%Y")
-      pt = self.get_ptime_roseville(day)
-      loc = 'Roseville'
+      pt = self.get_ptime_davis(day)
+      loc = 'Davis'
     asr = self.ctime(pt[3])
     await ctx.send('Asr is at **{}** {} in **{}**.'.format(asr, name, loc))
 
@@ -241,8 +241,8 @@ class trdCommands(commands.Cog, name='TRD Server Commands'):
       pt = self.get_ptime(day, lat,long)
     else:
       day = datetime.datetime.now(timezone('US/Pacific')).strftime("%d-%m-%Y")
-      pt = self.get_ptime_roseville(day)
-      loc = 'Roseville'
+      pt = self.get_ptime_davis(day)
+      loc = 'Davis'
     maghrib = self.ctime(pt[4])
     await ctx.send('Maghrib is at **{}** {} in **{}**.'.format(maghrib, name, loc))
   
@@ -267,8 +267,8 @@ class trdCommands(commands.Cog, name='TRD Server Commands'):
       pt = self.get_ptime(day, lat,long)
     else:
       day = datetime.datetime.now(timezone('US/Pacific')).strftime("%d-%m-%Y")
-      pt = self.get_ptime_roseville(day)
-      loc = 'Roseville'
+      pt = self.get_ptime_davis(day)
+      loc = 'Davis'
     isha = self.ctime(pt[6])
     await ctx.send('Isha is at **{}** {} in **{}**.'.format(isha, name, loc))
 
@@ -309,15 +309,16 @@ class trdCommands(commands.Cog, name='TRD Server Commands'):
     if location is None:
       await ctx.send("I don't belive it is possible to live nowhere...")
     else:
-      try:
+      if 1 ==1:
+      #try:
         locations = self.get_location()
         new_location = self.get_lat_long(location.lower()).split(',')
         tz = self.get_timezone(new_location[0],new_location[1])
         locations[ctx.author.id] = [new_location[0],new_location[1],location.capitalize(),tz]
         self.update_location(locations)
         await ctx.send('Set new location to **{}**.'.format(location.capitalize()))
-      except:
-        await ctx.send('Oops, I was not able to find **{}**. Try checking your spelling.'.format(location))
+      #except:
+        #await ctx.send('Oops, I was not able to find **{}**. Try checking your spelling.'.format(location))
 
 def setup(bot):
-	bot.add_cog(trdCommands(bot))
+	bot.add_cog(islamicCommands(bot))
