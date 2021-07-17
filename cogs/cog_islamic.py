@@ -14,15 +14,6 @@ class islamicCommands(commands.Cog, name='Islamic Commands'):
   def __init__(self, bot):
     self.bot = bot
 
-  async def cog_check(self, ctx):
-    infile = open('storage/blacklist','rb')
-    self.banned = pickle.load(infile)
-    infile.close()
-    for id in self.banned:
-      if int(format(ctx.author.id)) == id:
-        return False
-    return int(format(ctx.guild.id)) == 755833429622259913 or ctx.author.id == self.bot.author_id
-
   def ctime(self, time):
     return datetime.datetime.strptime(time, "%H:%M").strftime("%I:%M %p")
 

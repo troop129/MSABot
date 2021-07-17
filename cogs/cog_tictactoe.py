@@ -12,15 +12,6 @@ class TicTacToe(commands.Cog, name='Tic Tac Toe Commands'):
     def __init__(self, bot):
       self.bot = bot
 
-    async def cog_check(self, ctx):
-      infile = open('storage/blacklist','rb')
-      self.banned = pickle.load(infile)
-      infile.close()
-      for id in self.banned:
-        if int(format(ctx.author.id)) == id:
-          return False
-      return True
-
     boards = {}
 
     def create(self, server_id, player1, player2):

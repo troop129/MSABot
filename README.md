@@ -1,6 +1,6 @@
-# AbidBot
+# MSABot
 
-AbidBot is the future of all discord bots.
+Bot for the UC Davis MSA. Based on AbidBot.
 Currently under development.
 
 ### Features

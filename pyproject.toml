@@ -12,6 +12,7 @@ utils = "^1.0.1"
 asyncpg = "^0.22.0"
 config = "^0.5.0"
 pymongo = "^3.11.3"
+pytz = "^2021.1"
 
 [tool.poetry.dev-dependencies]
 

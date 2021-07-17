@@ -1,5 +1,5 @@
 import os
-#from keep_alive import keep_alive
+from keep_alive import keep_alive
 import discord
 from discord.ext import commands
 
@@ -7,7 +7,7 @@ intents = discord.Intents.default()
 intents.members = True
 
 bot = commands.Bot(
-	command_prefix="?",
+	command_prefix="!",
 	case_insensitive=True,
   intents = intents
 )
@@ -33,7 +33,6 @@ if __name__ == '__main__':
 	for extension in extensions:
 		bot.load_extension(extension) 
 
-#keep_alive()
-#token = os.environ.get("DISCORD_BOT_SECRET") 
-token = 'ODQ4MDcxNTY3NDIxNDcyNzc4.YLHSMg.-aeAm4gBIYTTeku2DvHdfMNnaEg'
+keep_alive()
+token = os.environ.get("DISCORD_BOT_SECRET") 
 bot.run(token)

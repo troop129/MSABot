@@ -15,15 +15,6 @@ class generalCommands(commands.Cog, name='General Server Commands'):
   def __init__(self, bot):
     self.bot = bot
 
-  async def cog_check(self, ctx):
-    infile = open('storage/blacklist','rb')
-    self.banned = pickle.load(infile)
-    infile.close()
-    for id in self.banned:
-      if int(format(ctx.author.id)) == id:
-        return False
-    return True
-
   @commands.command(name = 'reverse', aliases = ['uno', 'nou', 'no u'])
   async def reverse(self, ctx):
     cards = ['https://i.imgur.com/IxDEdxW.png', 'https://i.imgur.com/3WDcYbV.png']
@@ -31,7 +22,7 @@ class generalCommands(commands.Cog, name='General Server Commands'):
 
   @commands.command(name = 'github', aliases = ['git', 'source'])
   async def github(self, ctx):
-    await ctx.reply('Check out my source code: https://github.com/troop129/AbidBot')
+    await ctx.reply('Check out my source code: https://github.com/troop129/MSABot')
 
 def setup(bot):
 	bot.add_cog(generalCommands(bot))
