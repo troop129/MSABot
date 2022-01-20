@@ -59,8 +59,6 @@ For all my Muslim brothers and sisters, AbidBot can tell you what time the praye
 
 ![pt demo](https://i.imgur.com/faeDPNs.gif)
 
-(Excuse the MSABot demo, AbidBot command broke.)
-
 This command involved helper commands upon helper commands. It's kind of insane how complex it is. It has to make a request based on text location to a coordinates API, then to a timezone API, then to prayertime API, then process all the data with datetime. Quite fun. This is the main command:
 
 ```python
