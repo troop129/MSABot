@@ -1,4 +1,5 @@
 _pycache_
+/storage
 .replit
 example.draw
 keep_alive.py
