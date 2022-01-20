@@ -44,7 +44,7 @@ This was stolen and modified from someone's cog a long time ago, thanks for the 
 ### [Utility](https://github.com/troop129/MSABot/blob/master/cogs/cog_utility.py) Commands
 - `!choose {p1} | {p2} ...` to help you choose between things, unlimited options, just separate with `|`.
 - `!countdown {time}` to start a countdown of say `5s` and watch it count down.
-- `!vote {question} appends thumbs up and thumbs down to the question.
+- `!vote {question}` appends thumbs up and thumbs down to the question.
 - `!poll {o1} | {op2} ...` to make a poll of options when voting isn't enough
 - `!search {parameter}` to search Bing and get very inaccurate results.
 - `!define {word}` searches [Oxford's](https://oxforddictionaries.com/) API for a definition.
