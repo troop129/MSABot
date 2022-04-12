@@ -16,7 +16,7 @@ class helpCommands(commands.Cog, name='Help Server Commands'):
     embed.add_field(name="Fun", value="`!help fun <#>`", inline=True)
     embed.add_field(name="Utility", value="`!help utility <#>`", inline=True)
     embed.add_field(name="Islamic", value='`!help islamic`')
-    embed.set_footer(text='The help menu is stil being rewritten at this time. Thank you for your patience.')
+    embed.set_footer(text='If you find a bug, please DM the dev at "troop129#6666". Thanks!')
     await ctx.send(embed=embed)
 
   @help.command(name="fun")
@@ -25,7 +25,7 @@ class helpCommands(commands.Cog, name='Help Server Commands'):
     pages = 2
     embed = discord.Embed(title="MSA Bot Fun Commands", colour=discord.Colour(0x1), description="MSA Bot loves to have fun.", url="https://www.youtube.com/watch?v=dQw4w9WgXcQ")
     if arg == 0 or arg == 1:
-      embed.add_field(name="!joke", value="Random (possibly dad) joke.", inline=inl)
+      embed.add_field(name="!joke", value="Random (possibly dad) joke. Do `!joke categories` to see joke categories.", inline=inl)
       embed.add_field(name="!emojify <message>", value="Convert your text into text-emoji-things.", inline=inl)
       embed.add_field(name="!avatar <mention>*", value="Get a user's avatar. Leave out mention to get your own.", inline=inl)
       embed.add_field(name="!clap <message>", value="Puts clap emojis between your words. For extra emphasis, you know?", inline=inl)

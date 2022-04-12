@@ -28,6 +28,15 @@ class islamicCommands(commands.Cog, name='Islamic Commands'):
     pickle.dump(locations,outfile)
     outfile.close()
 
+  def get_locationn(self):
+    with open('storage/locations.json', 'r') as fp:
+      locations = json.load(fp)
+      return locations
+  
+  def update_locationn(self, locations):
+    with open('storage/locations.json', 'w') as fp:
+      json.dump(locations, fp, sort_keys=True, indent=4)
+
   def get_lat_long(self, location):
     conn = http.client.HTTPConnection('api.positionstack.com')
     params = urllib.parse.urlencode({
@@ -85,7 +94,7 @@ class islamicCommands(commands.Cog, name='Islamic Commands'):
       day = datetime.datetime.now(timezone(locations[ctx.author.id][3])).strftime("%d-%m-%Y")
       pt = self.get_ptime(day, lat,long)
     else:
-      day = datetime.datetime.now(timezone('US/Pacific')).strftime("%d-%m-%Y")
+      day = datetime.datetime.now(timezone('America/Los_Angeles')).strftime("%d-%m-%Y")
       pt = self.get_ptime_davis(day)
     times = {}
     times['fajr'] = pt[0]
@@ -118,11 +127,11 @@ class islamicCommands(commands.Cog, name='Islamic Commands'):
       long = locations[ctx.author.id][1]
       day = datetime.datetime.now(timezone(locations[ctx.author.id][3])).strftime("%d-%m-%Y")
       pt = self.get_ptime(day, lat,long)
-      embed=discord.Embed(title="AbidBot Prayer Times", description="Prayer times in **{}** from the *aladhan.com* API.".format(locations[ctx.author.id][2]))
+      embed=discord.Embed(title="MSABot Prayer Times", description="Prayer times in **{}** from the *aladhan.com* API.".format(locations[ctx.author.id][2]))
     else:
-      day = datetime.datetime.now(timezone('US/Pacific')).strftime("%d-%m-%Y")
+      day = datetime.datetime.now(timezone('America/Los_Angeles')).strftime("%d-%m-%Y")
       pt = self.get_ptime_davis(day)
-      embed=discord.Embed(title="AbidBot Prayer Times", description="Prayer times in Davis, CA, from the *aladhan.com* API.")
+      embed=discord.Embed(title="MSABot Prayer Times", description="Prayer times in **Davis, CA**, from the *aladhan.com* API.")
     fajr = self.ctime(pt[0])
     sunrise = self.ctime(pt[1])
     dhuhr = self.ctime(pt[2])
@@ -153,7 +162,7 @@ class islamicCommands(commands.Cog, name='Islamic Commands'):
       day = datetime.datetime.now(timezone(locations[ctx.author.id][3])).strftime("%d-%m-%Y")
       pt = self.get_ptime(day, lat,long)
     else:
-      day = datetime.datetime.now(timezone('US/Pacific')).strftime("%d-%m-%Y")
+      day = datetime.datetime.now(timezone('America/Los_Angeles')).strftime("%d-%m-%Y")
       pt = self.get_ptime_davis(day)
       loc = 'Davis'
     fajr = self.ctime(pt[0])
@@ -179,7 +188,7 @@ class islamicCommands(commands.Cog, name='Islamic Commands'):
       day = datetime.datetime.now(timezone(locations[ctx.author.id][3])).strftime("%d-%m-%Y")
       pt = self.get_ptime(day, lat,long)
     else:
-      day = datetime.datetime.now(timezone('US/Pacific')).strftime("%d-%m-%Y")
+      day = datetime.datetime.now(timezone('America/Los_Angeles')).strftime("%d-%m-%Y")
       pt = self.get_ptime_davis(day)
       loc = 'Davis'
     dhuhr = self.ctime(pt[2])
@@ -205,7 +214,7 @@ class islamicCommands(commands.Cog, name='Islamic Commands'):
       day = datetime.datetime.now(timezone(locations[ctx.author.id][3])).strftime("%d-%m-%Y")
       pt = self.get_ptime(day, lat,long)
     else:
-      day = datetime.datetime.now(timezone('US/Pacific')).strftime("%d-%m-%Y")
+      day = datetime.datetime.now(timezone('America/Los_Angeles')).strftime("%d-%m-%Y")
       pt = self.get_ptime_davis(day)
       loc = 'Davis'
     asr = self.ctime(pt[3])
@@ -231,7 +240,7 @@ class islamicCommands(commands.Cog, name='Islamic Commands'):
       day = datetime.datetime.now(timezone(locations[ctx.author.id][3])).strftime("%d-%m-%Y")
       pt = self.get_ptime(day, lat,long)
     else:
-      day = datetime.datetime.now(timezone('US/Pacific')).strftime("%d-%m-%Y")
+      day = datetime.datetime.now(timezone('America/Los_Angeles')).strftime("%d-%m-%Y")
       pt = self.get_ptime_davis(day)
       loc = 'Davis'
     maghrib = self.ctime(pt[4])
@@ -257,7 +266,7 @@ class islamicCommands(commands.Cog, name='Islamic Commands'):
       day = datetime.datetime.now(timezone(locations[ctx.author.id][3])).strftime("%d-%m-%Y")
       pt = self.get_ptime(day, lat,long)
     else:
-      day = datetime.datetime.now(timezone('US/Pacific')).strftime("%d-%m-%Y")
+      day = datetime.datetime.now(timezone('America/Los_Angeles')).strftime("%d-%m-%Y")
       pt = self.get_ptime_davis(day)
       loc = 'Davis'
     isha = self.ctime(pt[6])
@@ -272,13 +281,13 @@ class islamicCommands(commands.Cog, name='Islamic Commands'):
     if ctx.author.id in locations:
       day = datetime.datetime.now(timezone(locations[ctx.author.id][3])).strftime("%d-%m-%Y")
     else:
-      day = datetime.datetime.now(timezone('US/Pacific')).strftime("%d-%m-%Y")
+      day = datetime.datetime.now(timezone('America/Los_Angeles')).strftime("%d-%m-%Y")
     times = self.get_ptimes_array(ctx, day)
     if prayer in times:
       if ctx.author.id in locations:
         tu = self.timeuntil(str(times[prayer]), locations[ctx.author.id][3])
       else:
-        tu = self.timeuntil(times[prayer], 'US/Pacific')
+        tu = self.timeuntil(times[prayer], 'America/Los_Angeles')
       if tu[0].isnumeric():
         await ctx.send('**{}** is **{}** hours and **{}** minutes away.'.format(prayer, tu[0],tu[1]))
       else:
@@ -288,9 +297,9 @@ class islamicCommands(commands.Cog, name='Islamic Commands'):
           times = self.get_ptimes_array(ctx, day)
           tu = self.timeuntil(str(times[prayer]), locations[ctx.author.id][3])
         else:
-          day = (datetime.datetime.now(timezone('US/Pacific')) + datetime.datetime.timedelta(days=1)).strftime("%d-%m-%Y")
+          day = (datetime.datetime.now(timezone('America/Los_Angeles')) + datetime.datetime.timedelta(days=1)).strftime("%d-%m-%Y")
           times = self.get_ptimes_array(ctx, day)
-          tu = self.timeuntil(times[prayer], 'US/Pacific')
+          tu = self.timeuntil(times[prayer], 'America/Los_Angeles')
         await ctx.send('**{}** is **{}** hours and **{}** minutes away.'.format(prayer, tu[0],tu[1]))
     else:
       await ctx.send('I think you misspelled the prayer. Try again.')

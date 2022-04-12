@@ -14,13 +14,25 @@ class funCommands(commands.Cog, name='Fun Commands'):
   def __init__(self, bot):
     self.bot = bot
 
-  @commands.command(name = 'joke')
-  async def joke(self, ctx):
-    response = requests.get("https://official-joke-api.appspot.com/random_joke")
+  joke_categories = ["Programming", "Programming", "Miscellaneous", "Pun", "Spooky", "Christmas"]
+  @commands.command(name='joke')
+  async def joke(self, ctx, category:str = ""):
+    if category.strip().capitalize() in self.joke_categories:
+      category = category.strip().capitalize()
+    elif category.strip().capitalize() == "Categories":
+      c = "\n".join([str(elem) for elem in self.joke_categories])
+      return await ctx.send(f"```{c}```")
+    else:
+      category = "Any"
+    response = requests.get(
+        f"https://v2.jokeapi.dev/joke/{category}?blacklistFlags=nsfw,religious,political,racist,sexist,explicit")
     payload = response.json()
-    await ctx.send(payload['setup'])  
-    await asyncio.sleep(2)
-    await ctx.send(payload['punchline'])
+    if payload['type'] == "twopart":
+      await ctx.send(payload['setup'])
+      await asyncio.sleep(2)
+      await ctx.send(payload['delivery'])
+    else:
+      await ctx.send(payload["joke"])
 
   @commands.command(name = 'emojify', aliases = ['e', 'emoji'])
   async def emojify(self, ctx, *, arg = None):

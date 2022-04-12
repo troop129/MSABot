@@ -25,6 +25,7 @@ extensions = [
 	'cogs.cog_developer',
   'cogs.cog_general',
   'cogs.cog_tictactoe',
+  'cogs.cog_fun',
   'cogs.cog_help',
   'cogs.cog_islamic'
 ]
